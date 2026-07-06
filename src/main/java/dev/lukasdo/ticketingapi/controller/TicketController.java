@@ -2,14 +2,14 @@ package dev.lukasdo.ticketingapi.controller;
 
 import dev.lukasdo.ticketingapi.dto.TicketRequest;
 import dev.lukasdo.ticketingapi.dto.TicketResponse;
+import dev.lukasdo.ticketingapi.model.Ticket;
 import dev.lukasdo.ticketingapi.service.TicketService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController @RequestMapping("/tickets")
 public class TicketController {
@@ -22,5 +22,13 @@ public class TicketController {
     public ResponseEntity<TicketResponse> createTicket(@Valid @RequestBody TicketRequest ticketRequest) {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(TicketResponse.fromTicket(ticketService.createTicket(ticketRequest)));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<TicketResponse>> getAllTickets() {
+        List<TicketResponse> responses = ticketService.getAllTickets().stream()
+                .map(TicketResponse::fromTicket)
+                .toList();
+        return ResponseEntity.ok(responses);
     }
 }

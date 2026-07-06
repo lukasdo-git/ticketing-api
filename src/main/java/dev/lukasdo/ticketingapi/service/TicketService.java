@@ -6,6 +6,8 @@ import dev.lukasdo.ticketingapi.model.Ticket;
 import dev.lukasdo.ticketingapi.repository.TicketRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class TicketService {
     private final TicketRepository ticketRepository;
@@ -22,6 +24,10 @@ public class TicketService {
         ticket.setStatus(Status.SUBMITTED);
         //ticket.setUserId(); - later, when JWT is implemented for authentication we can grab the user from SecurityContextHolder
         return ticketRepository.save(ticket);
+    }
+
+    public List<Ticket> getAllTickets() {
+        return ticketRepository.findAll();
     }
 
 }
