@@ -6,12 +6,12 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 public class TicketRequest {
-    @NotBlank
-    @Size(max = 50)
+    @NotBlank(message = "Title cannot be blank")
+    @Size(max = 50, message = "Title cannot be more than 50 characers")
     private String title;
-    @Size(max = 250)
+    @Size(max = 250, message = "Description cannot be more than 250 characters")
     private String description;
-    @NotNull
+    @NotNull(message = "Priority cannot be empty")
     private Priority priority;
 
     public String getTitle() {
