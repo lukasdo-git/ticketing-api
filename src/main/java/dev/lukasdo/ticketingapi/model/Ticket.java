@@ -1,11 +1,15 @@
 package dev.lukasdo.ticketingapi.model;
 
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 
 @Entity
 public class Ticket {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long ticketId;
+
+    @Nullable //for now, reserved for future use when authentication is implemented
+    private String userId;
 
     private String title;
     private String description;
@@ -22,6 +26,14 @@ public class Ticket {
 
     public void setTicketId(Long ticketId) {
         this.ticketId = ticketId;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getTitle() {
