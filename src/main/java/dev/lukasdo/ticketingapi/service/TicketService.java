@@ -1,5 +1,6 @@
 package dev.lukasdo.ticketingapi.service;
 
+import dev.lukasdo.ticketingapi.dto.StatusUpdateRequest;
 import dev.lukasdo.ticketingapi.dto.TicketRequest;
 import dev.lukasdo.ticketingapi.exception.TicketNotFoundException;
 import dev.lukasdo.ticketingapi.model.Status;
@@ -34,6 +35,12 @@ public class TicketService {
     public Ticket getTicketById(Long id) {
         return ticketRepository.findById(id)
                 .orElseThrow(() -> new TicketNotFoundException(id));
+    }
+
+    public Ticket updateTicket(Long id, StatusUpdateRequest request) {
+        Ticket ticket = getTicketById(id);
+        ticket.setStatus(request.getStatus());
+        return ticketRepository.save(ticket);
     }
 
 }

@@ -1,5 +1,6 @@
 package dev.lukasdo.ticketingapi.controller;
 
+import dev.lukasdo.ticketingapi.dto.StatusUpdateRequest;
 import dev.lukasdo.ticketingapi.dto.TicketRequest;
 import dev.lukasdo.ticketingapi.dto.TicketResponse;
 import dev.lukasdo.ticketingapi.service.TicketService;
@@ -18,9 +19,9 @@ public class TicketController {
     }
 
     @PostMapping()
-    public ResponseEntity<TicketResponse> createTicket(@Valid @RequestBody TicketRequest ticketRequest) {
+    public ResponseEntity<TicketResponse> createTicket(@Valid @RequestBody TicketRequest request) {
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(TicketResponse.fromTicket(ticketService.createTicket(ticketRequest)));
+                .body(TicketResponse.fromTicket(ticketService.createTicket(request)));
     }
 
     @GetMapping
@@ -35,4 +36,11 @@ public class TicketController {
     public ResponseEntity<TicketResponse> getTicket(@PathVariable("ticketId") Long id) {
         return ResponseEntity.ok(TicketResponse.fromTicket(ticketService.getTicketById(id)));
     }
+
+    @PatchMapping("/{ticketId}/status")
+    public ResponseEntity<TicketResponse> updateTicketStatus(@PathVariable("ticketId") Long id, @Valid @RequestBody StatusUpdateRequest request) {
+        return ResponseEntity.ok(TicketResponse.fromTicket(ticketService.updateTicket(id, request)));
+    }
+
+
 }
