@@ -43,4 +43,8 @@ public class TicketService {
         return ticketRepository.save(ticket);
     }
 
+    public void deleteTicket(Long id) {
+        ticketRepository.delete(getTicketById(id));
+    }
+
 }
