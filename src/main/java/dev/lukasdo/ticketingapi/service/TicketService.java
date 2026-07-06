@@ -1,6 +1,7 @@
 package dev.lukasdo.ticketingapi.service;
 
 import dev.lukasdo.ticketingapi.dto.TicketRequest;
+import dev.lukasdo.ticketingapi.exception.TicketNotFoundException;
 import dev.lukasdo.ticketingapi.model.Status;
 import dev.lukasdo.ticketingapi.model.Ticket;
 import dev.lukasdo.ticketingapi.repository.TicketRepository;
@@ -28,6 +29,11 @@ public class TicketService {
 
     public List<Ticket> getAllTickets() {
         return ticketRepository.findAll();
+    }
+
+    public Ticket getTicketById(Long id) {
+        return ticketRepository.findById(id)
+                .orElseThrow(() -> new TicketNotFoundException(id));
     }
 
 }

@@ -2,7 +2,6 @@ package dev.lukasdo.ticketingapi.controller;
 
 import dev.lukasdo.ticketingapi.dto.TicketRequest;
 import dev.lukasdo.ticketingapi.dto.TicketResponse;
-import dev.lukasdo.ticketingapi.model.Ticket;
 import dev.lukasdo.ticketingapi.service.TicketService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -30,5 +29,10 @@ public class TicketController {
                 .map(TicketResponse::fromTicket)
                 .toList();
         return ResponseEntity.ok(responses);
+    }
+
+    @GetMapping("/{ticketId}")
+    public ResponseEntity<TicketResponse> getTicket(@PathVariable("ticketId") Long id) {
+        return ResponseEntity.ok(TicketResponse.fromTicket(ticketService.getTicketById(id)));
     }
 }
