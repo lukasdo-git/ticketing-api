@@ -1,0 +1,31 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: ticketing_db
+      POSTGRES_USER: ticketing_user
+      POSTGRES_PASSWORD: ticketing_password
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "9876:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ticketing_user -d ticketing_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  ticketing-app:
+    build: .
+    ports:
+      - "8808:8808"
+    environment:
+      SPRING_JDBC_URL: jdbc:postgresql://postgres:5432/ticketing_db
+      SPRING_DS_USERNAME: ticketing_user
+      SPRING_DS_PASSWORD: ticketing_password
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+volumes:
+  pgdata:
