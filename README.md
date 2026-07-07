@@ -1,6 +1,22 @@
 # Incident Ticketing API
 A REST API for managing incident/support tickets, built as a portfolio project to practice backend fundamentals: CRUD, input validation, rate limiting, layered architecture (controller/service/repository), and containerized deployment.
 
+## Quick start
+ 
+Pull the prebuilt image published on each [release](https://github.com/lukasdo-git/ticketing-api/releases)
+and start everything with a single command - no need to clone the repo or
+build anything locally:
+ 
+```bash
+curl -O https://raw.githubusercontent.com/lukasdo-git/ticketing-api/main/docker-compose.release.yml
+docker-compose -f docker-compose.release.yml up
+```
+ 
+The API will be available at `http://localhost:8808`. A standalone runnable
+JAR is also attached to each [release](https://github.com/lukasdo-git/ticketing-api/releases),
+if you'd rather run it directly with `java -jar` against your own PostgreSQL
+instance.
+
 ## Stack
 * Java 21, Spring Boot (Web, Data JPA, Validation)
 * PostgreSQL
