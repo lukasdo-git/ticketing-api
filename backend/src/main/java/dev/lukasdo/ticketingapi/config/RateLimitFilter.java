@@ -28,6 +28,11 @@ public class RateLimitFilter extends HttpFilter {
     protected void doFilter(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
         throws IOException, ServletException {
 
+        if (request.getRequestURI().startsWith("/actuator/")) {
+            chain.doFilter(request, response);
+            return;
+        }
+
         String client = request.getRemoteAddr();
         Bucket clientBucket = buckets.computeIfAbsent(client, k -> newBucket());
 
